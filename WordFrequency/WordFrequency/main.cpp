@@ -1,46 +1,50 @@
 /**
 	Program:	main.cpp
 	Programmer:	David Crossman, 200296439
-	Date:		01/18/2014
+	Date:		01/19/2014
 */
 
 #include <iostream>
 #include <iomanip>
 #include <locale>
-#include <fstream>
+#include <string>
 
 using namespace std;
 
 #include "wordTree.h"
 
-void readDataFromFile(WordTree *wordTree);
-void displayFreqResults(WordTree *wordTree);
+void readFile (WordTree *wordTree);
+void display  (TNode *node);
 
 int main () {
 
 	WordTree wordTree;
-	readDataFromFile(&wordTree);
-	displayFreqResults(&wordTree);
+	readFile(&wordTree);
+	display(wordTree.getHead());
 
 	return 0;
 }
 
-void readDataFromFile (WordTree *wordTree) {
+void readFile (WordTree *wordTree) {
 	string data;
-	cin >> data;
 	//loop until the end of file
-	while (cin.eof()) {
+	while (!cin.eof() && cin.good()) {
+		cin >> data;
 		//make all the characters lowercase
-		for (unsigned int i = 0; i <= data.size(); i++)
+		for (unsigned int i = 0; i <= (int) data.size(); i++)
 			data[i] = tolower(data[i]);
 		//insert data in the tree alphabetical
 		if ( isalpha(data[0]) && islower(data[0]) )
-			cout << "this is data:" << data;
-
-		cin >> data;
+			wordTree->insert(data);
+		//break; - For some reason will not exit loop at the end of file
 	}
 };
 
-void displayFreqResults(WordTree *wordTree) {
-
+void display (TNode *node) {
+	if (node != NULL) 
+	{
+		display(node->left);
+		cout << node->word << " = " << node->count << endl;
+		display(node->right);
+	}
 };

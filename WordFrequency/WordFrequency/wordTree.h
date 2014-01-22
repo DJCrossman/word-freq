@@ -10,7 +10,7 @@
 using namespace std;
 
 struct TNode {
-	char* word;
+	string word; // char* word;
 	int count;
 	TNode* left;
 	TNode* right;
@@ -18,10 +18,15 @@ struct TNode {
 
 class WordTree {
 public: 
-	WordTree ();
+	WordTree (); 
 	~WordTree ();
-	bool wordExists(string word);
-	void addWord(string word);
+
+	bool isEmpty ();
+	void insert  (string word);
+	void insert	 (TNode* node);
+	TNode* getHead ();
+private:
+	TNode *head;
 };
 
 #endif
